@@ -2,12 +2,13 @@
 	"variables": {
 		"cpu": "4",
 		"disk_size": "10240",
-		"iso_url": "http://old-releases.ubuntu.com/releases/16.04.3//ubuntu-16.04.3-server-amd64.iso",
-		"iso_checksum": "a06cd926f5855d4f21fb4bc9978a35312f815fbda0d0ef7fdc846861f4fc4600",
+		"iso_url": "http://releases.ubuntu.com/xenial/ubuntu-16.04.6-server-amd64.iso",
+		"iso_checksum_url": "http://releases.ubuntu.com/xenial/SHA256SUMS",
 		"iso_checksum_type": "sha256",
 		"ram_size": "2048",
 		"ssh_username": "otto",
-		"ssh_password": "SuperSecureTemp!"
+		"ssh_password": "SuperSecureTemp!",
+        "vm_name": "packer-ubuntu-16.04-amd64"
 	},
     "provisioners": [
         {
@@ -49,7 +50,7 @@
 				" -- <wait>",
 				"<enter><wait>" 
 			],
-			"cpu": "{{user `cpu`}}",
+			"cpus": "{{user `cpu`}}",
 			"boot_wait": "10s",
 			"disk_size": "{{user `disk_size`}}",
 			"guest_os_type": "ubuntu-64",
@@ -57,16 +58,16 @@
 			"http_directory": "http",
 			"iso_url": "{{user `iso_url`}}",
 			"iso_checksum_type": "{{user `iso_checksum_type`}}",
-			"iso_checksum": "{{user `iso_checksum`}}",
+			"iso_checksum_url": "{{user `iso_checksum_url`}}",
 			"output_directory": "bin",
-			"ram_size": "{{user `ram_size`}}",
+			"memory": "{{user `ram_size`}}",
 			"shutdown_command": "sudo shutdown -P now",
 			"ssh_username": "{{user `ssh_username`}}",
 			"ssh_password": "{{user `ssh_password`}}",
 			"ssh_port": 22,
 			"ssh_wait_timeout": "10000s",
 			"tools_upload_flavor": "linux",
-			"vm_name": "packer-ubuntu-16.04-amd64",
+			"vm_name": "{{user `vm_name`}}",
 			"vmx_data": {
 				"cupid.coresPerSocket": "1",
 				"memsize": "512",
@@ -76,13 +77,13 @@
         {
         	"type": "hyperv-iso",
 			"iso_url": "{{user `iso_url`}}",
-        	"iso_checksum": "a06cd926f5855d4f21fb4bc9978a35312f815fbda0d0ef7fdc846861f4fc4600",
+        	"iso_checksum_url": "{{user `iso_checksum_url`}}",
 			"iso_checksum_type": "{{user `iso_checksum_type`}}",
 			"ssh_username": "{{user `ssh_username`}}",
 			"ssh_password": "{{user `ssh_password`}}",
         	"ssh_port": 22,
         	"shutdown_command": "sudo shutdown -P now",
-        	"vm_name": "xenial64-base",
+			"vm_name": "{{user `vm_name`}}",
         	"boot_wait": "10s",
 			"headless": true,
 			"ssh_timeout": "1h",
